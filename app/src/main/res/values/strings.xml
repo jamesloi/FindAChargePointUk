@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FindAChargePointUk</string>
+    <string name="action_findme">Find Me</string>
+    <string name="menu_title">Find your nearest EV charge point</string>
+</resources>
