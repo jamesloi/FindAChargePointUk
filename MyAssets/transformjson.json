@@ -1,0 +1,31 @@
+[
+    {
+        "operation": "shift",
+        "spec": {
+            "type": "Feature",
+            "properties": {
+                "Name": "AddressInfo.Title",
+                "Address1": "AddressInfo.AddressLine1",
+                "Address2": "AddressInfo.AddressLine2",
+                "Town": "AddressInfo.Town",
+                "County": "AddressInfo.StateOrProvince",
+                "Postcode": "AddressInfo.Postcode",
+                "Price": "AddressInfo.UsageCost",
+                "Details": "AddressInfo.AccessComments",
+                "MoreInfo": "GeneralComments",
+                "NumberOfConnections": "NumberOfPoints",
+                "ConnectionAmps": "Connections.Amps",
+                "ConnectionVoltage": "Connections.Voltage",
+                "ConnectionPowerKw": "Connections.PowerKW",
+                "ConnectionQuantity": "Connections.Quantity"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "AddressInfo.Longitude",
+                    "AddressInfo.Latitude"
+                ]
+            }
+        }
+    }
+]
