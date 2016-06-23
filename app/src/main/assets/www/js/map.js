@@ -14,12 +14,12 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 
-/*L.geoJson(geoJsonFull, {
+L.geoJson(geoJsonFull, {
     pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, geojsonMarkerOptions);
     },
     onEachFeature: onEachFeature
-}).addTo(mymap);*/
+}).addTo(mymap);
 
 Android.getLastLocation();
 
@@ -31,11 +31,32 @@ function getLocation(longitude, latitude)
 }
 
 function onEachFeature(feature, layer) {
-    var popupContent = "<h2>Car Charge Point</h2>";
+    var popupContent = "<h2>EV Car Charge Point</h2>";
     if (feature.properties) {
         for (var key in feature.properties) {
-          if (feature.properties.hasOwnProperty(key) && key !== "@id") {
-            popupContent += "<p><strong>" + key + ":</strong> " + feature.properties[key] + "</p>";
+          if (feature.properties.hasOwnProperty(key) && key == "NumberOfConnections") {
+            popupContent += "<p><strong>Number Of Connections:</strong> " + feature.properties[key] + "</p>";
+          }
+          else
+          {
+                if (feature.properties.hasOwnProperty(key) && key == "Connections") {
+                    for (var c in feature.properties.Connections)
+                    {
+                        popupContent += "<table style='width:100%;border: 1px solid Silver;border-collapse:collapse;'>";
+                        popupContent += "<tr style='border: 1px solid Silver;'><th>Amps</th><th>Voltage</th><th>Power Kw</th><th>Quantity</th></tr><tr>";
+                        for (var con in feature.properties.Connections[c])
+                        {
+                            popupContent += "<td>" + feature.properties.Connections[c][con] + "</td>";
+                        }
+                        popupContent += "</tr></table><br>";
+                    }
+                }
+                else
+                {
+                  if (feature.properties.hasOwnProperty(key)) {
+                    popupContent += "<p><strong>" + key + ":</strong> " + feature.properties[key] + "</p>";
+                  }
+                }
           }
         }
     }
