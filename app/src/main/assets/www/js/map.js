@@ -14,12 +14,37 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 
-L.geoJson(geoJsonFull, {
+var featuresLayer = L.geoJson(geoJsonFull, {
     pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, geojsonMarkerOptions);
     },
     onEachFeature: onEachFeature
-}).addTo(mymap);
+});
+
+mymap.addLayer(featuresLayer);
+
+var fuse = new Fuse(geoJsonFull.features, {
+    keys: ['properties.Name', 'properties.Address1', 'properties.Address2', 'properties.Town', 'properties.County', 'properties.Postcode']
+});
+
+var searchControl = new L.Control.Search({
+    layer: featuresLayer,
+    propertyName: 'Name',
+    filterData: function(text, records) {
+        var jsons = fuse.search(text),
+            ret = {}, key;
+
+        for(var i in jsons) {
+            key = jsons[i].properties.Name;
+            ret[ key ]= records[key];
+        }
+
+        console.log(jsons,ret);
+        return ret;
+    }
+});
+
+mymap.addControl( searchControl );
 
 Android.getLastLocation();
 
